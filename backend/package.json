@@ -2,11 +2,12 @@
   "name": "kdis",
   "version": "1.0.0",
   "type": "module",
-  "description": "it a smart internal search tool that understands documents, assets, and teams. Search across PDFs, Slides, Figma, Docs, and more — all in one place.",
+  "description": "its a smart internal search tool that understands documents, assets, and teams. Search across PDFs, Slides, Figma, Docs, and more — all in one place.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "keywords": [
     "Semantic",
