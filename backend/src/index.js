@@ -30,7 +30,9 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/search", searchRoutes);
 app.use("/api/files", file);
 
-
+app.get("/",(req,res)=>{
+    res.json('success');
+})
 
 // Serve uploads
 app.use("/uploads", express.static("uploads"));
