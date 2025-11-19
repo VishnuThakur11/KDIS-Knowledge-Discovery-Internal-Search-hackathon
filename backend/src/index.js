@@ -18,7 +18,7 @@ app.use(express.json());
 
 // CORS middleware
 const corsOptions = {
-    origin:'http://localhost:5173',
+    origin:'https://vishnuhajam-internal-search-docs-app.netlify.app',
     credentials:true
 }
 
