@@ -18,7 +18,7 @@ app.use(express.json());
 
 // CORS middleware
 const corsOptions = {
-    origin:'https://localhost:5173',
+    origin:'https://internal-search-app-vishnu-hajam.vercel.app/',
     credentials:true
 }
 
@@ -40,5 +40,5 @@ app.use("/uploads", express.static("uploads"));
 // Error handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+// const PORT = process.env.PORT || 5001;
+// app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
