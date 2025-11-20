@@ -18,7 +18,7 @@ app.use(express.json());
 
 // CORS middleware
 const corsOptions = {
-    origin:'https://internal-search-app-vishnu-hajam.vercel.app/',
+    origin:'https://internal-search-app-vishnu-hajam.vercel.app',
     credentials:true
 }
 
