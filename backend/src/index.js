@@ -14,15 +14,19 @@ connectDB();
 const app = express();
 
 // CORS
+const local = "http://localhost:5173";
+const prod = "https://internal-search-app-vishnu-hajam.vercel.app";
+
+const site = process.env.NODE_ENV === "production" ? prod : local;
 
 app.use(cors({
-  origin: "https://internal-search-app-vishnu-hajam.vercel.app",
+  origin: site,
   credentials: true
 }));
 
 app.use(express.json());
 
-Routes
+//Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/search", searchRoutes);
@@ -34,5 +38,7 @@ app.get("/", (req, res) => {
 
 app.use(errorHandler);
 
-// ❗ NO app.listen() here
+const PORT = process.env.PORT || 5001;
+app.listen(PORT, () => console.log("local server running on " + PORT));
+
 export default app;
