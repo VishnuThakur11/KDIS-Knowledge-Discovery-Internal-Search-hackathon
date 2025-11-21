@@ -3,6 +3,7 @@ import { upload } from "../config/multer.js";
 import cloudinary from "../config/cloudinary.js";
 import fs from "fs";
 import StoredFile from "../models/file.model.js";
+import isAuthenticated from "../middleware/auth.js";
 
 const router = express.Router();
 // const storage = multer.memoryStorage();
@@ -62,9 +63,24 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
 // ----------------------
 // GET RECENT FILES
 // ----------------------
-router.get("/recent", async (req, res) => {
+// router.get("/recent", async (req, res) => {
+//     try {
+//         const files = await StoredFile.find()
+//             .sort({ createdAt: -1 })
+//             .limit(10);
+
+//         res.json(files);
+//     } catch (error) {
+//         console.error("Error fetching recent files:", error);
+//         res.status(500).json({ success: false, message: "Error fetching recent files" });
+//     }
+// });
+
+router.get("/recent", isAuthenticated, async (req, res) => {
     try {
-        const files = await StoredFile.find()
+        const userId = req.id; // comes from isAuthenticated middleware
+
+        const files = await StoredFile.find({ user: userId })
             .sort({ createdAt: -1 })
             .limit(10);
 
