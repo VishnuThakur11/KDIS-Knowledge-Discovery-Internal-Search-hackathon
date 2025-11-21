@@ -42,5 +42,5 @@ app.use(errorHandler);
 
 export default app;
 
-// const PORT = 5001;
-// app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+const PORT = process.env.PORT
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
