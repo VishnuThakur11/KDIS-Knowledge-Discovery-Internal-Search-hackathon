@@ -1,9 +1,9 @@
 // src/config/api.js
 export const USER_API_ENDPOINT = import.meta.env.VITE_USER_API_ENDPOINT || "http://localhost:5001/api/auth";
 export const BASE_API = process.env.NODE_ENV === "production"
-    ? "https://backend-internal-search-vishnu.vercel.app/api"
+    ? "https://backend-internal-search-vishnu.vercel.app/api/files/uploadPdf"
     : "http://localhost:5001/api";
-export const GET_RECENT_FILES_API = "http://localhost:5001/api/files/recent";
+export const GET_RECENT_FILES_API = "https://backend-internal-search-vishnu.vercel.app/api/files/recent";
 
 
 export const localBackend = "http://localhost:5001";
