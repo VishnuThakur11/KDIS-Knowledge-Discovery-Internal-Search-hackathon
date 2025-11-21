@@ -4,8 +4,8 @@ import cloudinary from "../config/cloudinary.js";
 import fs from "fs";
 import StoredFile from "../models/file.model.js";
 
-const router = express.Router();
-const storage = multer.memoryStorage();
+// const router = express.Router();
+// const storage = multer.memoryStorage();
 const upload = multer({ storage });
 // ----------------------
 // UPLOAD PDF
