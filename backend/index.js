@@ -1,12 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { connectDB } from "./config/mongo.js";
-import uploadRoutes from "./routes/upload.js";
-import searchRoutes from "./routes/search.js";
-import authRoutes from "./routes/auth.js";
-import { errorHandler } from "./middleware/errorHandler.js";
-import file from "./routes/file.js"
+import { connectDB } from "../src/config/mongo.js";
+import uploadRoutes from "../src/routes/upload.js";
+import searchRoutes from "../src/routes/search.js";
+import authRoutes from "../src/routes/auth.js";
+import { errorHandler } from "../src/middleware/errorHandler.js";
+import file from "../src/routes/file.js"
 
 dotenv.config();
 connectDB();
@@ -40,5 +40,7 @@ app.use("/uploads", express.static("uploads"));
 // Error handler
 app.use(errorHandler);
 
-const PORT = 5001;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+export default app;
+
+// const PORT = 5001;
+// app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
