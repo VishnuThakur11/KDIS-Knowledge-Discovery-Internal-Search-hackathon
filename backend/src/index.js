@@ -54,8 +54,8 @@ app.use("/uploads", express.static("uploads"));
 // Error handler
 app.use(errorHandler);
 
-// ❌ REMOVE app.listen() — breaks Vercel
-// const PORT = process.env.PORT
-// app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
+const PORT = process.env.PORT
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 
 export default app;
