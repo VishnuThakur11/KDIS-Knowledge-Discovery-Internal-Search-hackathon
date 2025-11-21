@@ -13,13 +13,32 @@ connectDB();
 
 const app = express();
 
-// CORS
-app.use(cors({
-  origin: "https://internal-search-app-vishnu-hajam.vercel.app",
+//cors
+const allowedOrigin = "https://internal-search-app-vishnu-hajam.vercel.app";
+
+app.use(
+  cors({
+    origin: allowedOrigin,
+    credentials: true,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type, Authorization",
+  })
+);
+
+// Handle preflight OPTIONS request
+app.options("*", cors({
+  origin: allowedOrigin,
   credentials: true
 }));
 
-app.use(express.json());
+// CORS
+
+// app.use(cors({
+//   origin: "https://internal-search-app-vishnu-hajam.vercel.app",
+//   credentials: true
+// }));
+
+// app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
