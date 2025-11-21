@@ -1,12 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { connectDB } from "../src/config/mongo.js";
-import uploadRoutes from "../src/routes/upload.js";
-import searchRoutes from "../src/routes/search.js";
-import authRoutes from "../src/routes/auth.js";
-import file from "../src/routes/file.js";
-import { errorHandler } from "../src/middleware/errorHandler.js";
+import { connectDB } from "./config/mongo.js";
+import uploadRoutes from "./routes/upload.js";
+import searchRoutes from "./routes/search.js";
+import authRoutes from "./routes/auth.js";
+import file from "./routes/file.js";
+import { errorHandler } from "./middleware/errorHandler.js";
 
 dotenv.config();
 connectDB();
