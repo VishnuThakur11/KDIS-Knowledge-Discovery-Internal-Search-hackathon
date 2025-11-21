@@ -5,7 +5,8 @@ import fs from "fs";
 import StoredFile from "../models/file.model.js";
 
 const router = express.Router();
-
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 // ----------------------
 // UPLOAD PDF
 // ----------------------
@@ -15,10 +16,22 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
             return res.status(400).json({ success: false, message: "No file uploaded" });
         }
 
-        const result = await cloudinary.uploader.upload(req.file.path, {
-            resource_type: "raw",
-            folder: "resumes",
-        });
+
+
+
+        // const result = await cloudinary.uploader.upload(req.file.path, {
+        //     resource_type: "raw",
+        //     folder: "resumes",
+        // });
+
+        // Upload directly from memory stream
+const result = await cloudinary.uploader.upload_stream(
+    { resource_type: "raw", folder: "resumes" },
+    async (error, result) => { 
+        console.log(error||result)
+    } // callback handles DB and response
+);
+stream.end(req.file.buffer);
 
         const { userId, category } = req.body;
 
@@ -30,7 +43,9 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
             category: category || "General",
         });
 
+
         fs.unlinkSync(req.file.path);
+
 
         return res.json({
             success: true,
