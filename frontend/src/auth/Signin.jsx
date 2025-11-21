@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../auth/AuthContext";
+import { backendURL } from "../config/api";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ function SignIn() {
     setError("");
 
     try {
-      const res = await fetch("https://backend-internal-search-vishnu.vercel.app/api/auth/signin", {
+      const res = await fetch(`${backendURL}/api/auth/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -29,7 +30,7 @@ function SignIn() {
         setError(data.message || "Login failed");
         return;
       }
-      console.log(data.token , res)
+      console.log(data.token, res)
       // Save token & user info in context (and localStorage inside context)
       login(data.token, data.user);
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { FileText, Clock } from "lucide-react";
+import { backendURL } from "../config/api";
 
 export default function RecentFiles() {
   const [files, setFiles] = useState([]);
@@ -9,7 +10,7 @@ export default function RecentFiles() {
   useEffect(() => {
     const fetchRecentFiles = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/api/files/recent");
+        const res = await axios.get(`${backendURL}/api/files/recent`);
         setFiles(res.data); // API returns array
       } catch (error) {
         console.error("Fetch recent files error:", error);
@@ -63,6 +64,11 @@ export default function RecentFiles() {
                   <div className="flex items-center text-gray-500 text-sm mt-1">
                     <Clock size={14} className="mr-1" />
                     {new Date(file.createdAt).toLocaleString()}
+                    
+                  </div>
+                  <br />
+                  <div className="flex items-center text-gray-500 text-sm mt-1">
+                    uploaded by:{}
                   </div>
                 </div>
               </div>
