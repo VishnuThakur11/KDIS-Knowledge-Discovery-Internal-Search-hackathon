@@ -16,11 +16,19 @@ const app = express();
 // Middleware: order matters
 app.use(express.json());
 
-// CORS middleware
 const corsOptions = {
-    origin:'https://internal-search-app-vishnu-hajam.vercel.app',
-    credentials:true
-}
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
+};
+
+// 🔥 Fixes browser preflight OPTIONS requests on Vercel
+app.options("*", cors(corsOptions));
 
 app.use(cors(corsOptions));
 
