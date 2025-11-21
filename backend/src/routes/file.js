@@ -19,19 +19,19 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
 
 
 
-        // const result = await cloudinary.uploader.upload(req.file.path, {
-        //     resource_type: "raw",
-        //     folder: "resumes",
-        // });
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            resource_type: "raw",
+            folder: "resumes",
+        });
 
         // Upload directly from memory stream
-const result = await cloudinary.uploader.upload_stream(
-    { resource_type: "raw", folder: "resumes" },
-    async (error, result) => { 
-        console.log(error||result)
-    } // callback handles DB and response
-);
-stream.end(req.file.buffer);
+        // const result = await cloudinary.uploader.upload_stream(
+        //     { resource_type: "raw", folder: "resumes" },
+        //     async (error, result) => {
+        //         console.log(error || result)
+        //     } // callback handles DB and response
+        // );
+        // stream.end(req.file.buffer);
 
         const { userId, category } = req.body;
 
