@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { connectDB } from "./config/mongo.js";
 import uploadRoutes from "./routes/upload.js";
 import searchRoutes from "./routes/search.js";
@@ -25,7 +26,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
+app.use(cookieParser());
 //Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/upload", uploadRoutes);

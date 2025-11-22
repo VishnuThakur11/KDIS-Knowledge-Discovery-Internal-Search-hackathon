@@ -4,6 +4,8 @@ import SearchBar from "../components/SearchBar";
 import axios from "axios";
 import { UPLOAD_API } from "../config/api";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
 
 export default function Dashboard() {
   const fileInputRef = useRef(null);
@@ -18,10 +20,13 @@ export default function Dashboard() {
 
     console.log("Selected file:", file);
 
+  
+
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("userId", "12345"); // TODO: Replace with AuthContext user.id
+    // formData.append("userId", "12345"); // TODO: Replace with AuthContext user.id
     formData.append("category", "General");
+    
 
     try {
       const res = await axios.post(UPLOAD_API, formData, {

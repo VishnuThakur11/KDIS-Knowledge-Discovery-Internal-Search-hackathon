@@ -78,7 +78,8 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
 
 router.get("/recent", isAuthenticated, async (req, res) => {
     try {
-        const userId = req.id; // comes from isAuthenticated middleware
+        console.log(req.user._id)
+        const userId = req.user._id; // comes from isAuthenticated middleware
 
         const files = await StoredFile.find({ user: userId })
             .sort({ createdAt: -1 })
