@@ -261,6 +261,7 @@ export default function Navbar() {
                 className="flex items-center gap-2 bg-gray-100 p-1 rounded-full"
               >
                 <User size={20} />
+                <span className="font-medium">{user?.name}</span>
                 <ChevronDown size={16} className={`transition-transform ${profileOpen ? "rotate-180" : ""}`} />
               </button>
               <AnimatePresence>
@@ -289,6 +290,7 @@ export default function Navbar() {
         {/* Mobile menu */}
         <div className="md:hidden">
           <button onClick={() => setOpen(s => !s)} className="p-2">{open ? <X size={26} /> : <Menu size={26} />}</button>
+          
         </div>
       </div>
 
@@ -301,6 +303,11 @@ export default function Navbar() {
             transition={{ duration: 0.25 }}
             className="md:hidden bg-white/90 text-black shadow-lg"
           >
+            {isLoggedIn && (
+            <div className="px-2 py-2 font-medium text-gray-700">
+              👋 Hi, {user?.name}
+            </div>
+          )}
             <div className="px-4 py-4 space-y-3">
               <Link to="/" onClick={() => setOpen(false)} className="block py-2 font-medium">Home</Link>
               <details className="group">
@@ -318,17 +325,22 @@ export default function Navbar() {
               <Link to="/dashboard" onClick={() => setOpen(false)} className="block py-2">Dashboard</Link>
 
               {!isLoggedIn ? (
+
                 <>
+
+
                   <Link to="/signin" onClick={() => setOpen(false)} className="block mt-3 w-full text-center py-2 bg-blue-600 text-white rounded-full">Sign In</Link>
                   <Link to="/signup" onClick={() => setOpen(false)} className="block mt-2 w-full text-center py-2 bg-gray-200 text-black rounded-full">Sign Up</Link>
                 </>
               ) : (
+
                 <button
                   onClick={() => { logout(); setOpen(false); navigate("/"); }}
                   className="block mt-3 w-full text-center py-2 bg-red-500 text-white rounded-full"
                 >
                   Logout
                 </button>
+
               )}
             </div>
           </motion.div>

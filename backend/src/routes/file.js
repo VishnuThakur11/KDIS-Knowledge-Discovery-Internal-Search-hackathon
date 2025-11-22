@@ -11,7 +11,7 @@ const router = express.Router();
 // ----------------------
 // UPLOAD PDF
 // ----------------------
-router.post("/uploadPdf", upload.single("file"), async (req, res) => {
+router.post("/uploadPdf", isAuthenticated , upload.single("file"), async (req, res) => {
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, message: "No file uploaded" });
@@ -40,7 +40,8 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
             url: result.secure_url,
             fileName: req.file.originalname,
             fileType: req.file.mimetype,
-            user: userId || "12345",
+            // user: userId || "12345",
+            user: req.id,
             category: category || "General",
         });
 
@@ -78,8 +79,8 @@ router.post("/uploadPdf", upload.single("file"), async (req, res) => {
 
 router.get("/recent", isAuthenticated, async (req, res) => {
     try {
-        console.log(req.user._id)
-        const userId = req.user._id; // comes from isAuthenticated middleware
+        console.log(req.id)
+        const userId = req.id; // comes from isAuthenticated middleware
 
         const files = await StoredFile.find({ user: userId })
             .sort({ createdAt: -1 })
