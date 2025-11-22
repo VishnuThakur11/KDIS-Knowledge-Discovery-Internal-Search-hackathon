@@ -8,6 +8,7 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const { login } = useContext(AuthContext);
@@ -15,6 +16,7 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
       const res = await fetch(`${backendURL}/api/auth/signin`, {
@@ -28,6 +30,7 @@ function SignIn() {
 
       if (!res.ok) {
         setError(data.message || "Login failed");
+        setLoading(false);
         return;
       }
       console.log(data.token, res)
@@ -39,6 +42,8 @@ function SignIn() {
     } catch (err) {
       console.error(err);
       setError("Server error. Please try again.");
+    } finally {
+      setLoading(false); // stop loader
     }
   };
 
@@ -80,10 +85,19 @@ function SignIn() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-black text-white rounded-xl font-semibold hover:bg-gray-900 transition shadow-lg"
+            disabled={loading}
+            className={`w-full py-3 rounded-xl font-semibold transition shadow-lg 
+              flex items-center justify-center
+              ${loading ? "bg-gray-700 cursor-not-allowed" : "bg-black hover:bg-gray-900"} 
+              text-white`}
           >
-            Sign In
+            {loading ? (
+              <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Sign In"
+            )}
           </button>
+
 
           <p className="text-center text-sm text-gray-600 mt-4">
             Don't have an account?{" "}

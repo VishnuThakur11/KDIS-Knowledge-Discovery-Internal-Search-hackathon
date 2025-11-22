@@ -29,6 +29,7 @@ function SignUp() {
       const res = await fetch(`${USER_API_ENDPOINT}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({ name, email, password }),
       });
 
@@ -37,7 +38,7 @@ function SignUp() {
       if (!res.ok) {
         setError(data.message || "Signup failed");
       } else {
-        login(data.token); // update navbar state
+        login(data.token, data.user);
         setError("");
         navigate("/dashboard");
       }

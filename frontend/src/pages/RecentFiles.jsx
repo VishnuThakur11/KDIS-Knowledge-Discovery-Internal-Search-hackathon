@@ -3,23 +3,33 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { FileText, Clock } from "lucide-react";
 import { backendURL, GET_RECENT_FILES_API } from "../config/api";
+import Loader from "../components/Loader";
+
 
 export default function RecentFiles() {
   const [files, setFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
 
   useEffect(() => {
     const fetchRecentFiles = async () => {
       try {
         // const res = await axios.get(`${backendURL}/api/files/recent`);
+        setLoading(true);
         const res = await axios.get(GET_RECENT_FILES_API , { withCredentials: true });
         setFiles(res.data); // API returns array
       } catch (error) {
         console.error("Fetch recent files error:", error);
+      }finally {
+        setLoading(false); 
       }
     };
 
     fetchRecentFiles();
   }, []);
+
+  if (loading) return  <Loader />;
 
   return (
     <div className="p-6 md:p-12 mt-24 min-h-screen bg-gray-50">
