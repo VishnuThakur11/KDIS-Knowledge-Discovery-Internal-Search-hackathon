@@ -68,9 +68,7 @@ export default function RecentFiles() {
                     
                   </div>
                   <br />
-                  <div className="flex items-center text-gray-500 text-sm mt-1">
-                     uploaded by: {file.uploadedBy?.name || "Unknown"}
-                  </div>
+                 
                 </div>
               </div>
 
