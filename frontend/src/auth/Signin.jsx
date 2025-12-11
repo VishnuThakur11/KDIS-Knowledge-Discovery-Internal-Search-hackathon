@@ -1,0 +1,114 @@
+import { useState, useContext } from "react";
+import { motion } from "framer-motion";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
+import { backendURL } from "../config/api";
+
+function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${backendURL}/api/auth/signin`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.message || "Login failed");
+        setLoading(false);
+        return;
+      }
+      console.log(data.token, res)
+      // Save token & user info in context (and localStorage inside context)
+      login(data.token, data.user);
+
+      // Redirect to dashboard
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
+      setError("Server error. Please try again.");
+    } finally {
+      setLoading(false); // stop loader
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-white px-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200"
+      >
+        <h2 className="text-3xl font-bold text-black text-center">Welcome Back</h2>
+        <p className="text-gray-600 text-center mt-2">Sign in to continue</p>
+
+        <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+          <div>
+            <label className="block mb-1 text-sm font-medium text-black">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="w-full px-4 py-3 border rounded-xl bg-white text-black border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 text-sm font-medium text-black">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 border rounded-xl bg-white text-black border-gray-300 focus:ring-2 focus:ring-blue-500 outline-none"
+            />
+          </div>
+
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 rounded-xl font-semibold transition shadow-lg 
+              flex items-center justify-center
+              ${loading ? "bg-gray-700 cursor-not-allowed" : "bg-black hover:bg-gray-900"} 
+              text-white`}
+          >
+            {loading ? (
+              <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Sign In"
+            )}
+          </button>
+
+
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Don't have an account?{" "}
+            <NavLink to="/signup" className="text-blue-600 font-semibold hover:underline">
+              Sign up
+            </NavLink>
+          </p>
+        </form>
+      </motion.div>
+    </div>
+  );
+}
+
+export default SignIn;
