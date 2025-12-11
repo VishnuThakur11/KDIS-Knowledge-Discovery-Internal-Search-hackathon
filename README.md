@@ -1,1 +1,1 @@
-Live Preview Link - https://vishnuhajam-internal-search-docs-app.netlify.app/
+Live Preview Link - https://internal-search-app-vishnu-hajam.vercel.app/
